@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useContext, useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import api from '../services/api';
 import Navbar from '../components/AppNavbar';
@@ -149,19 +149,25 @@ const KnowledgeFeed = () => {
 
         try {
             const { data } = await api.put(`/posts/${postId}/bookmark`);
+
+            // Determine if bookmarked from data or toggle logic if data doesn't return it directly
+            // Usually API returns the updated user or post status. Assuming data.isBookmarked or similar.
+            const isBookmarked = data.isBookmarked;
+
             setPosts(prev =>
                 prev.map(post => {
                     if (post._id !== postId) return post;
                     const currentBookmarks = post.bookmarks || [];
-                    const isBookmarked = data?.isBookmarked;
                     const nextBookmarks = isBookmarked
                         ? [...currentBookmarks, user._id]
                         : currentBookmarks.filter((id) => id !== user._id);
                     return { ...post, bookmarks: nextBookmarks };
                 })
             );
+            toast.success(isBookmarked ? 'Saved to bookmarks' : 'Removed from bookmarks');
         } catch (err) {
             console.error('Error saving post:', err);
+            toast.error('Failed to update bookmark');
         }
     };
 
