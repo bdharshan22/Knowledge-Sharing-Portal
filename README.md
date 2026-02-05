@@ -193,11 +193,3 @@ npm run dev
 
 👨‍💻 Maintained by: Dharshan B
 🔗 GitHub: https://github.com/bdharshan22
-
-
-
-
-
-
-
-
