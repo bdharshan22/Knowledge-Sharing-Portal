@@ -194,8 +194,10 @@ npm run dev
 👨‍💻 Maintained by: Dharshan B
 🔗 GitHub: https://github.com/bdharshan22
 
-📦 Repository: https://github.com/bdharshan22/Knowledge-Sharing-Portal
 
-<p align="right"><a href="#readme-top">⬆ Back to top</a></p> ```
+
+
+
+
 
 
