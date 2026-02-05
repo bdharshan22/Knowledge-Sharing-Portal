@@ -366,7 +366,11 @@ export const toggleBookmark = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'Post not found' });
         }
 
-        const isBookmarked = user!.bookmarks.includes(id as any);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const isBookmarked = user.bookmarks.includes(id as any);
 
         if (isBookmarked) {
             (user.bookmarks as any).pull(id);
