@@ -145,16 +145,12 @@ const LandingPage = () => {
                         className="max-w-4xl mx-auto space-y-8"
                     >
                         {/* Pill Badge */}
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-premium shadow-lg hover:shadow-xl transition-all cursor-pointer group animate-slide-up">
-                            <span className="flex h-2 w-2 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 animate-pulse" />
-                            <span className="text-sm font-sans font-semibold text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-600 group-hover:from-blue-600 group-hover:to-violet-600 transition-all">v2.0 is now live</span>
-                            <span className="text-slate-400 group-hover:text-violet-500 transition-colors">→</span>
-                        </div>
 
-                        <h1 className="text-6xl md:text-8xl font-sans font-extrabold tracking-tight leading-[1.1] animate-fade-in-scale">
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">Knowledge,</span> <br />
+
+                        <h1 className="text-6xl md:text-8xl font-sans font-extrabold tracking-tight leading-tight animate-fade-in-scale">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">Knowledge </span>
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 animate-shimmer">
-                                amplified.
+                                Evolved.
                             </span>
                         </h1>
 
@@ -166,9 +162,6 @@ const LandingPage = () => {
                             <Link to="/signup" className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white text-lg font-sans font-bold hover:shadow-2xl hover:shadow-slate-500/30 hover:-translate-y-1 active:scale-95 transition-all relative overflow-hidden group">
                                 <span className="relative z-10">Start for free</span>
                                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            </Link>
-                            <Link to="/demo" className="w-full sm:w-auto px-8 py-4 rounded-xl glass-premium text-slate-700 text-lg font-sans font-semibold hover:shadow-xl hover:-translate-y-1 transition-all group">
-                                <span className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-violet-600 transition-all">View interactive demo</span>
                             </Link>
                         </div>
                     </motion.div>
@@ -367,7 +360,7 @@ const LandingPage = () => {
                                 <Link to="#" className="hover:text-slate-600 text-slate-500 mr-4">Status</Link>
                                 <Link to="#" className="hover:text-slate-600 text-slate-500 mr-4">Writers</Link>
                                 <Link to="#" className="hover:text-slate-600 text-slate-500 mr-4">Blog</Link>
-                                <Link to="#" className="hover:text-slate-600 text-slate-500 mr-4">Carrers</Link>
+                                <Link to="#" className="hover:text-slate-600 text-slate-500 mr-4">Careers</Link>
                                 <Link to="#" className="hover:text-slate-600 text-slate-500 mr-4">Privacy</Link>
                                 <Link to="#" className="hover:text-slate-600 text-slate-500">Terms</Link>
                             </div>
