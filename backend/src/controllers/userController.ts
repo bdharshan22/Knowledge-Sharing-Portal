@@ -266,15 +266,21 @@ export const updateLearningReminders = async (req: Request, res: Response) => {
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: 'User not found' });
 
-        user.preferences = user.preferences || ({} as any);
-        user.preferences.learningReminders = {
-            enabled: typeof enabled === 'boolean' ? enabled : user.preferences.learningReminders?.enabled || false,
-            time: time || user.preferences.learningReminders?.time || '09:00',
-            daysOfWeek: Array.isArray(daysOfWeek) ? daysOfWeek : user.preferences.learningReminders?.daysOfWeek || []
+        if (!user.preferences) {
+            user.preferences = {} as any;
+        }
+
+        const prefs: any = user.preferences || {};
+        const reminders = prefs.learningReminders || {};
+
+        user.preferences!.learningReminders = {
+            enabled: typeof enabled === 'boolean' ? enabled : reminders.enabled || false,
+            time: time || reminders.time || '09:00',
+            daysOfWeek: Array.isArray(daysOfWeek) ? daysOfWeek : reminders.daysOfWeek || []
         } as any;
 
         await user.save();
-        res.json({ learningReminders: user.preferences.learningReminders });
+        res.json({ learningReminders: user.preferences!.learningReminders });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
     }
@@ -374,7 +380,7 @@ export const deleteCollection = async (req: Request, res: Response) => {
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: 'User not found' });
 
-        user.collections = (user.collections || []).filter((c: any) => c._id.toString() !== collectionId);
+        user.collections = (user.collections || []).filter((c: any) => c._id.toString() !== collectionId) as any;
         await user.save();
 
         res.json({ collections: user.collections });
