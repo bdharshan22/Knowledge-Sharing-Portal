@@ -51,7 +51,7 @@ export const resolvePost = async (req: Request, res: Response) => {
 
         post.moderationStatus = status;
         if (status === 'approved') {
-            post.flags = [];
+            post.flags = [] as any;
         }
         if (note) {
             post.editHistory = post.editHistory || [];

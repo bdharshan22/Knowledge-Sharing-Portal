@@ -1,299 +1,228 @@
-# Professional Knowledge Sharing Portal
+<a name="readme-top"></a>
 
-A comprehensive, professional-grade knowledge sharing platform inspired by Stack Overflow, Medium, and Notion. Features advanced Q&A system, reputation management, real-time collaboration, and modern UI/UX.
+<!-- PROJECT HEADER -->
+<br />
+<div align="center">
+  <a href="https://github.com/bdharshan22/Knowledge-Sharing-Portal">
+    <img src="https://img.shields.io/badge/Knowledge-Sharing%20Portal-cyan?style=for-the-badge&logo=knowledgebase&logoColor=white" alt="Logo" width="300" height="auto">
+  </a>
 
-## 🚀 Key Features
+  <h1 align="center">Knowledge Sharing Portal</h1>
 
-### Core Platform
-- **Multi-format Content**: Articles, Questions, Tutorials, Discussions, Resources
-- **Advanced Search & Filtering**: Full-text search, category filters, difficulty levels
-- **Professional UI/UX**: Modern design with animations, responsive layout
-- **Real-time Updates**: Live notifications, instant interactions
+  <p align="center">
+    A professional-grade, full-stack platform for collaborative learning, knowledge exchange, and community building.
+    <br />
+    <a href="#demo"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="#live-demo">View Demo</a>
+    ·
+    <a href="https://github.com/bdharshan22/Knowledge-Sharing-Portal/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/bdharshan22/Knowledge-Sharing-Portal/issues">Request Feature</a>
+  </p>
+</div>
 
-### Q&A System (Stack Overflow-inspired)
-- **Question & Answer Format**: Dedicated Q&A interface
-- **Voting System**: Upvote/downvote answers and posts
-- **Answer Acceptance**: Question authors can mark best answers
-- **Bounty System**: Reward points for quality answers
-- **Duplicate Detection**: AI-powered duplicate question detection
+<!-- BADGES -->
+<div align="center">
 
-### Reputation & Gamification
-- **Reputation Points**: Earn reputation through quality contributions
-- **User Levels**: Progressive leveling system (1-∞)
-- **Badge System**: Achievement badges for milestones
-- **Leaderboards**: Top contributors by reputation, posts, answers
-- **Expertise Tracking**: Subject matter expert identification
+![React](https://img.shields.io/badge/React-19.0-61DAFB?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript)
+![Nodejs](https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js)
+![Express](https://img.shields.io/badge/Express-5.0-000000?style=flat-square&logo=express)
+![MongoDB](https://img.shields.io/badge/MongoDB-9.0-47A248?style=flat-square&logo=mongodb)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-4.0-06B6D4?style=flat-square&logo=tailwindcss)
+![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?style=flat-square&logo=vite)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)
 
-### Social Features
-- **User Profiles**: Comprehensive profiles with stats, badges, expertise
-- **Follow System**: Follow users and get updates
-- **Mentions & Notifications**: Real-time notification system
-- **Collections**: Organize posts into public/private collections
-- **Bookmarking**: Save posts for later reading
+</div>
 
-### Content Management
-- **Rich Text Editor**: Markdown support with syntax highlighting
-- **Media Upload**: Images, videos, documents via Cloudinary
-- **Version Control**: Edit history and change tracking
-- **Collaborative Editing**: Multiple authors per post
-- **Content Moderation**: Flagging, reporting, admin controls
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary><strong>Table of Contents</strong></summary>
+  <ol>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#key-features">Key Features</a></li>
+    <li><a href="#tech-stack">Tech Stack</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Run Locally</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-### Advanced Features
-- **AI-Powered Recommendations**: Personalized content suggestions
-- **Analytics Dashboard**: Detailed engagement metrics
-- **SEO Optimization**: Meta tags, sitemaps, structured data
-- **Multi-language Support**: Internationalization ready
-- **API Integration**: RESTful API for third-party integrations
+---
 
-### Professional Tools
-- **Team Workspaces**: Organization-level knowledge bases
-- **Access Control**: Role-based permissions
-- **Custom Branding**: White-label options
-- **Export/Import**: Data portability
-- **Backup & Recovery**: Automated data protection
+## 🚀 About The Project
+
+The **Knowledge Sharing Portal** is a modern, feature-rich application designed to facilitate seamless knowledge exchange within organizations or communities. Inspired by platforms like Stack Overflow, Medium, and Notion, it combines the best aspects of Q&A forums, blogging platforms, and learning management systems.
+
+Built with a focus on **User Experience (UX)** and **Performance**, the portal features a stunning **Glassmorphism UI**, real-time interactions, and a robust gamification system to keep users engaged.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## ✨ Key Features
+
+### 🧠 Knowledge Management
+*   **Rich Content Creation**: Markdown support with syntax highlighting, image uploads, and auto-saving drafts.
+*   **Advanced Q&A**: Dedicated question format with voting, answer acceptance, and bounties.
+*   **Smart Search**: Full-text search with history, filters, and highlighting.
+*   **Table of Contents**: Auto-generated TOC for long-form articles.
+
+### 👥 Community & Social
+*   **User Profiles**: comprehensive stats, skills, **Activity Timeline**, and reputation tracking.
+*   **Knowledge Feed**: Personalized feed with advanced filtering (tags, types, sorting).
+*   **Real-time Chat**: Socket.io powered chat rooms for communities.
+*   **Social Interactions**: Follow users, like/bookmark posts, threaded comments.
+
+### 🎮 Gamification & Growth
+*   **Reputation System**: Earn points for contributions (posts, answers, likes).
+*   **Badges & Achievements**: Unlock milestones for continuous engagement.
+*   **Leaderboards**: Weekly and all-time top contributors.
+*   **Learning Paths**: Structured curriculums with progress tracking and reminders.
+
+### 🛡️ Admin & Moderation
+*   **Moderation Queue**: Tools for reviewing flagged content.
+*   **Role-Based Access**: Granular permissions for Admins, Moderators, and Users.
+*   **Analytics**: Insights into platform usage and engagement.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
 
 ## 🛠 Tech Stack
 
-### Backend
-- **Runtime**: Node.js with TypeScript
-- **Framework**: Express.js
-- **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JWT with refresh tokens
-- **File Storage**: Cloudinary for media
-- **Real-time**: Socket.io for live features
-- **Search**: MongoDB Atlas Search
-- **Caching**: Redis for performance
-
 ### Frontend
-- **Framework**: React 19 with TypeScript
-- **Build Tool**: Vite for fast development
-- **Styling**: Tailwind CSS with custom components
-- **UI Components**: Headless UI, Heroicons
-- **Animations**: Framer Motion
-- **State Management**: React Context + Hooks
-- **Routing**: React Router v7
-- **Forms**: React Hook Form with validation
+*   **Framework**: [React 19](https://react.dev/)
+*   **Build Tool**: [Vite](https://vitejs.dev/)
+*   **Language**: [TypeScript](https://www.typescriptlang.org/)
+*   **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+*   **Animations**: [Framer Motion 12](https://www.framer.com/motion/)
+*   **Routing**: [React Router v7](https://reactrouter.com/)
+*   **State**: Context API + Hooks
 
-### Additional Libraries
-- **Markdown**: React Markdown with syntax highlighting
-- **Date Handling**: date-fns
-- **Notifications**: React Hot Toast
-- **Virtual Scrolling**: React Window for performance
-- **Intersection Observer**: For infinite scroll
+### Backend
+*   **Runtime**: [Node.js](https://nodejs.org/)
+*   **Framework**: [Express.js 5](https://expressjs.com/)
+*   **Database**: [MongoDB](https://www.mongodb.com/) (Mongoose 9)
+*   **Real-time**: [Socket.io](https://socket.io/)
+*   **Caching**: Redis
+*   **Storage**: Cloudinary (Image/Media)
+*   **Auth**: JWT (Access + Refresh Tokens) + Google OAuth
 
-## 📋 Prerequisites
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-- Node.js (v18 or higher)
-- MongoDB (Local installation or Atlas)
-- Redis (for caching and sessions)
-- Cloudinary account (for media uploads)
+---
 
-## 🚀 Installation & Setup
+## 🏁 Getting Started
 
-### 1. Clone Repository
-```bash
-git clone <repository-url>
-cd knowledge-sharing-portal
-```
+Follow these steps to set up the project locally.
 
-### 2. Backend Setup
-```bash
+### Prerequisites
+*   Node.js (v18+)
+*   MongoDB (Local or Atlas)
+*   Redis (Optional, for caching)
+*   Cloudinary Account (for media)
+
+### Installation
+
+1.  **Clone the repo**
+    ```sh
+    git clone https://github.com/bdharshan22/Knowledge-Sharing-Portal.git
+    cd Knowledge-Sharing-Portal
+    ```
+
+2.  **Install Backend Dependencies**
+    ```sh
+    cd backend
+    npm install
+    ```
+
+3.  **Configure Backend Environment**
+    Create a `.env` file in `backend/` directory:
+    ```env
+    PORT=5000
+    MONGO_URI=your_mongodb_connection_string
+    JWT_SECRET=your_jwt_secret
+    JWT_REFRESH_SECRET=your_refresh_secret
+    CLOUDINARY_CLOUD_NAME=your_cloud_name
+    CLOUDINARY_API_KEY=your_key
+    CLOUDINARY_API_SECRET=your_secret
+    CLIENT_URL=http://localhost:5173
+    ```
+
+4.  **Install Frontend Dependencies**
+    ```sh
+    cd ../frontend
+    npm install
+    ```
+
+5.  **Configure Frontend Environment**
+    Create a `.env` file in `frontend/` directory:
+    ```env
+    VITE_API_URL=http://localhost:5000/api
+    VITE_SOCKET_URL=http://localhost:5000
+    VITE_GOOGLE_CLIENT_ID=your_google_client_id
+    ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## 🏃 Run Locally
+
+**1. Start the Backend Server**
+```sh
 cd backend
-npm install
+npm run dev
+# Server runs on http://localhost:5000
 ```
 
-Create `.env` file:
-```env
-# Server Configuration
-PORT=5000
-NODE_ENV=development
-
-# Database
-MONGO_URI=mongodb://localhost:27017/knowledge-portal
-# or MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/knowledge-portal
-
-# Authentication
-JWT_SECRET=your-super-secret-jwt-key
-JWT_REFRESH_SECRET=your-refresh-token-secret
-JWT_EXPIRE=7d
-JWT_REFRESH_EXPIRE=30d
-
-# Cloudinary (Media Upload)
-CLOUDINARY_CLOUD_NAME=your-cloud-name
-CLOUDINARY_API_KEY=your-api-key
-CLOUDINARY_API_SECRET=your-api-secret
-
-# Redis (Optional - for caching)
-REDIS_URL=redis://localhost:6379
-
-# Email (Optional - for notifications)
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your-email@gmail.com
-SMTP_PASS=your-app-password
-
-# Client URL
-CLIENT_URL=http://localhost:5173
+**2. Start the Frontend Client**
+```sh
+cd frontend
+npm run dev
+# Client runs on http://localhost:5173
 ```
 
-### 3. Frontend Setup
-```bash
-cd ../frontend
-npm install
-```
-
-Create `.env` file:
-```env
-VITE_API_URL=http://localhost:5000/api
-VITE_SOCKET_URL=http://localhost:5000
-```
-
-### 4. Database Seeding (Optional)
-```bash
-cd backend
+**3. Seed Data (Optional)**
+```sh
+# In backend directory
 npm run seed
 ```
 
-## 🏃‍♂️ Running the Application
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Development Mode
-
-**Terminal 1 - Backend:**
-```bash
-cd backend
-npm run dev
-```
-Server runs on `http://localhost:5000`
-
-**Terminal 2 - Frontend:**
-```bash
-cd frontend
-npm run dev
-```
-Client runs on `http://localhost:5173`
-
-### Production Build
-```bash
-# Build frontend
-cd frontend
-npm run build
-
-# Start backend in production
-cd ../backend
-npm start
-```
-
-## 📱 Key Pages & Features
-
-### Public Pages
-- **Home Feed**: Latest posts with advanced filtering
-- **Post Detail**: Full post view with comments/answers
-- **User Profiles**: Public user information and activity
-- **Categories**: Browse by topic categories
-- **Tags**: Explore content by tags
-- **Leaderboard**: Top contributors
-
-### Authenticated Features
-- **Dashboard**: Personalized activity feed
-- **Create Content**: Rich editor for posts/questions
-- **My Profile**: Edit profile, view stats, manage collections
-- **Notifications**: Real-time activity updates
-- **Bookmarks**: Saved content management
-- **Settings**: Account preferences and privacy
-
-### Admin Features
-- **Content Moderation**: Review flagged content
-- **User Management**: Manage user accounts and permissions
-- **Analytics**: Platform usage statistics
-- **Category Management**: Create and organize categories
-- **System Settings**: Platform configuration
-
-## 🔧 API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `POST /api/auth/refresh` - Refresh access token
-- `POST /api/auth/logout` - User logout
-
-### Posts
-- `GET /api/posts` - Get posts with filtering
-- `GET /api/posts/:id` - Get single post
-- `POST /api/posts` - Create new post
-- `PUT /api/posts/:id` - Update post
-- `DELETE /api/posts/:id` - Delete post
-- `POST /api/posts/:id/like` - Toggle like
-- `POST /api/posts/:id/bookmark` - Toggle bookmark
-
-### Q&A System
-- `POST /api/posts/:id/answers` - Add answer
-- `POST /api/posts/:id/answers/:answerId/vote` - Vote on answer
-- `POST /api/posts/:id/answers/:answerId/accept` - Accept answer
-
-### Users
-- `GET /api/users/profile/:id` - Get user profile
-- `PUT /api/users/profile` - Update profile
-- `POST /api/users/follow/:id` - Follow/unfollow user
-- `GET /api/users/leaderboard` - Get leaderboard
-
-## 🎨 UI/UX Features
-
-- **Responsive Design**: Mobile-first approach
-- **Dark/Light Mode**: Theme switching
-- **Accessibility**: WCAG 2.1 compliant
-- **Performance**: Lazy loading, virtual scrolling
-- **Animations**: Smooth transitions and micro-interactions
-- **Progressive Web App**: Offline support and installability
-
-## 🔒 Security Features
-
-- **Authentication**: JWT with refresh tokens
-- **Authorization**: Role-based access control
-- **Input Validation**: Comprehensive data validation
-- **Rate Limiting**: API request throttling
-- **CORS**: Cross-origin resource sharing
-- **Helmet**: Security headers
-- **Content Sanitization**: XSS protection
-
-## 📈 Performance Optimizations
-
-- **Database Indexing**: Optimized MongoDB queries
-- **Caching**: Redis for frequently accessed data
-- **CDN**: Cloudinary for media delivery
-- **Code Splitting**: Lazy-loaded React components
-- **Image Optimization**: WebP format with fallbacks
-- **Bundle Optimization**: Tree shaking and minification
-
-## 🚀 Deployment
-
-### Docker Deployment
-```bash
-# Build and run with Docker Compose
-docker-compose up --build
-```
-
-### Manual Deployment
-1. Set up MongoDB and Redis instances
-2. Configure environment variables
-3. Build frontend: `npm run build`
-4. Deploy backend to your server
-5. Serve frontend static files
+---
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Distributed under the MIT License. See `LICENSE` for more information.
 
-## 🙏 Acknowledgments
+---
 
-- Inspired by Stack Overflow's Q&A system
-- UI/UX patterns from Medium and Notion
-- Community-driven knowledge sharing principles
-- Open source libraries and contributors
+## 📞 Contact
+
+**Project Team** - [GitHub Profile](https://github.com/bdharshan22)
+
+Project Link: [https://github.com/bdharshan22/Knowledge-Sharing-Portal](https://github.com/bdharshan22/Knowledge-Sharing-Portal)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

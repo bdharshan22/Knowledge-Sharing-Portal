@@ -131,8 +131,10 @@ export const updateProgress = async (req: Request, res: Response) => {
             user.learningStreak = { current: 0, longest: 0, lastStudyDate: now } as any;
         }
 
+        const streak = user.learningStreak!;
+
         if (!lastStudyDate) {
-            user.learningStreak.current = 1;
+            streak.current = 1;
         } else {
             const diffMs = normalizeDate(now).getTime() - normalizeDate(lastStudyDate).getTime();
             const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
@@ -140,14 +142,14 @@ export const updateProgress = async (req: Request, res: Response) => {
             if (diffDays === 0) {
                 // same day, keep streak
             } else if (diffDays === 1) {
-                user.learningStreak.current = (user.learningStreak.current || 0) + 1;
+                streak.current = (streak.current || 0) + 1;
             } else {
-                user.learningStreak.current = 1;
+                streak.current = 1;
             }
         }
 
-        user.learningStreak.longest = Math.max(user.learningStreak.longest || 0, user.learningStreak.current || 0);
-        user.learningStreak.lastStudyDate = now;
+        streak.longest = Math.max(streak.longest || 0, streak.current || 0);
+        streak.lastStudyDate = now;
 
         enrollment.lastCompletedAt = now;
         enrollment.lastAccessed = new Date();

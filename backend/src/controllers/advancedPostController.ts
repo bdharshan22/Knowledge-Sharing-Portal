@@ -150,12 +150,12 @@ export const likePost = async (req: Request, res: Response) => {
         }
 
         const isLiked = post.likes.includes(userId);
-        
+
         if (isLiked) {
-            post.likes.pull(userId);
+            (post.likes as any).pull(userId);
         } else {
-            post.likes.push(userId);
-            post.dislikes.pull(userId);
+            (post.likes as any).push(userId);
+            (post.dislikes as any).pull(userId);
 
             if (post.author.toString() !== userId) {
                 await Notification.create({
@@ -289,18 +289,18 @@ export const voteAnswer = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'Answer not found' });
         }
 
-        answer.votes.up.pull(userId);
-        answer.votes.down.pull(userId);
+        (answer.votes!.up as any).pull(userId);
+        (answer.votes!.down as any).pull(userId);
 
         if (voteType === 'up') {
-            answer.votes.up.push(userId);
+            (answer.votes!.up as any).push(userId);
         } else if (voteType === 'down') {
-            answer.votes.down.push(userId);
+            (answer.votes!.down as any).push(userId);
         }
 
         await post.save();
 
-        const score = answer.votes.up.length - answer.votes.down.length;
+        const score = (answer.votes?.up.length || 0) - (answer.votes?.down.length || 0);
         res.json({ score, voteType });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
@@ -334,7 +334,7 @@ export const acceptAnswer = async (req: Request, res: Response) => {
 
         answer.isAccepted = true;
         answer.acceptedAt = new Date();
-        post.acceptedAnswer = answerId;
+        post.acceptedAnswer = answerId as any;
 
         await post.save();
 
@@ -366,14 +366,14 @@ export const toggleBookmark = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'Post not found' });
         }
 
-        const isBookmarked = user.bookmarks.includes(id);
+        const isBookmarked = user!.bookmarks.includes(id as any);
 
         if (isBookmarked) {
-            user.bookmarks.pull(id);
-            post.bookmarks.pull(userId);
+            (user.bookmarks as any).pull(id);
+            (post.bookmarks as any).pull(userId);
         } else {
-            user.bookmarks.push(id);
-            post.bookmarks.push(userId);
+            (user.bookmarks as any).push(id);
+            (post.bookmarks as any).push(userId);
         }
 
         await user.save();

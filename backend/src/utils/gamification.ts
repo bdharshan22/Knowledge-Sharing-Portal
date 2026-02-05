@@ -17,18 +17,18 @@ export const calculateReputation = async (userId: string, action: string, points
     const user = await User.findById(userId);
     if (!user) return;
 
-    (user as any).reputation += points;
-    (user as any).level = (user as any).calculateLevel();
+    (user as any).reputation = ((user as any).reputation || 0) + points;
+    (user as any).level = (user as any).calculateLevel ? (user as any).calculateLevel() : 1;
     await user.save();
 
     // Check for reputation milestones
     const milestones = [100, 500, 1000, 2500, 5000, 10000];
-    if (milestones.includes(user.reputation)) {
+    if (milestones.includes((user as any).reputation)) {
         await Notification.create({
             recipient: userId,
             type: 'reputation_milestone',
             title: 'Reputation Milestone!',
-            message: `You've reached ${user.reputation} reputation points!`,
+            message: `You've reached ${(user as any).reputation} reputation points!`,
             data: { reputationGained: points }
         });
     }
@@ -38,10 +38,10 @@ export const awardBadges = async (userId: string) => {
     const user = await User.findById(userId);
     if (!user) return;
 
-    const badges = [];
+    const badges: any[] = [];
 
     // First Post Badge
-    if ((user as any).stats?.postsCount === 1 && !user.badges.some(b => b.name === 'First Post')) {
+    if ((user as any).stats?.postsCount === 1 && !(user as any).badges.some((b: any) => b.name === 'First Post')) {
         badges.push({
             name: 'First Post',
             description: 'Created your first post',
@@ -51,7 +51,7 @@ export const awardBadges = async (userId: string) => {
     }
 
     // Prolific Writer Badge
-    if ((user as any).stats?.postsCount >= 10 && !user.badges.some(b => b.name === 'Prolific Writer')) {
+    if ((user as any).stats?.postsCount >= 10 && !(user as any).badges.some((b: any) => b.name === 'Prolific Writer')) {
         badges.push({
             name: 'Prolific Writer',
             description: 'Created 10 posts',
@@ -61,7 +61,7 @@ export const awardBadges = async (userId: string) => {
     }
 
     // Helpful Badge
-    if ((user as any).stats?.answersCount >= 5 && !user.badges.some(b => b.name === 'Helpful')) {
+    if ((user as any).stats?.answersCount >= 5 && !(user as any).badges.some((b: any) => b.name === 'Helpful')) {
         badges.push({
             name: 'Helpful',
             description: 'Provided 5 helpful answers',
@@ -71,7 +71,7 @@ export const awardBadges = async (userId: string) => {
     }
 
     // Nice Post Badge
-    if ((user as any).stats?.likesReceived >= 10 && !user.badges.some(b => b.name === 'Nice Post')) {
+    if ((user as any).stats?.likesReceived >= 10 && !(user as any).badges.some((b: any) => b.name === 'Nice Post')) {
         badges.push({
             name: 'Nice Post',
             description: 'Received 10 likes on your posts',
@@ -81,7 +81,7 @@ export const awardBadges = async (userId: string) => {
     }
 
     // Popular Badge
-    if ((user as any).stats?.likesReceived >= 50 && !user.badges.some(b => b.name === 'Popular')) {
+    if ((user as any).stats?.likesReceived >= 50 && !(user as any).badges.some((b: any) => b.name === 'Popular')) {
         badges.push({
             name: 'Popular',
             description: 'Received 50 likes',
@@ -98,7 +98,7 @@ export const awardBadges = async (userId: string) => {
     // We can query the DB for this too but let's keep it simple for now and rely on stats we have or simple reputation milestones.
 
     // Reputable Badge
-    if (user.reputation >= 500 && !user.badges.some(b => b.name === 'Reputable')) {
+    if ((user as any).reputation >= 500 && !(user as any).badges.some((b: any) => b.name === 'Reputable')) {
         badges.push({
             name: 'Reputable',
             description: 'Earned 500 reputation',
@@ -108,7 +108,7 @@ export const awardBadges = async (userId: string) => {
     }
 
     if (badges.length > 0) {
-        user.badges.push(...badges);
+        (user as any).badges.push(...badges);
         await user.save();
 
         // Create notifications for new badges

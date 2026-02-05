@@ -85,8 +85,8 @@ categorySchema.methods.getFullTree = async function () {
 
 // Get category breadcrumbs
 categorySchema.methods.getBreadcrumbs = async function () {
-    const breadcrumbs = [];
-    let current = this;
+    const breadcrumbs: any[] = [];
+    let current: any = this;
 
     while (current) {
         breadcrumbs.unshift({
