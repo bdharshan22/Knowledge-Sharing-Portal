@@ -6,29 +6,46 @@ Follow these steps to deploy your Knowledge Sharing Portal.
 
 We will deploy the Node.js/Express backend to Render.com.
 
-### Prerequisites
-- Push your project to a GitHub repository.
+### Option A: Automatic Deployment (Recommended - Blueprints)
+The project includes a `render.yaml` file for automated configuration.
 
-### Steps
+1.  **Push** your code to GitHub.
+2.  **Sign up/Log in** to [Render](https://render.com).
+3.  Click **"New +"** and select **"Blueprint"**.
+4.  Connect your GitHub repository.
+5.  Render will read the `render.yaml` and show you the service configuration.
+6.  **Environment Variables**: You will be prompted to input the values for your secrets (copy from your `.env`):
+    - `MONGO_URI`
+    - `JWT_SECRET`
+    - `JWT_REFRESH_SECRET`
+    - `CLOUDINARY_CLOUD_NAME`
+    - `CLOUDINARY_API_KEY`
+    - `CLOUDINARY_API_SECRET`
+    - `CLIENT_URL` (Set to your local URL first `http://localhost:5173` or `*`, update to Vercel URL later)
+7.  Click **"Apply"**. Render will deploy your service.
+
+### Option B: Manual Deployment
+
 1.  **Sign up/Log in** to [Render](https://render.com).
 2.  Click **"New +"** and select **"Web Service"**.
 3.  Connect to your GitHub repository.
 4.  **Configure the Service**:
-    - **Name**: `knowledge-portal-backend` (or similar)
-    - **Root Directory**: `backend` (Important: tell Render the backend is in a distinct folder)
+    - **Name**: `knowledge-portal-backend`
+    - **Root Directory**: `backend`
     - **Runtime**: `Node`
     - **Build Command**: `npm install && npm run build`
     - **Start Command**: `npm start`
 5.  **Environment Variables**:
     Scroll down to "Environment Variables" and add these keys (copy values from your local `.env`):
-    - `MONGO_URI`: (Your MongoDB Atlas Connection String)
-    - `JWT_SECRET`: (A long random string)
-    - `CLOUDINARY_CLOUD_NAME`: (From Cloudinary)
-    - `CLOUDINARY_API_KEY`: (From Cloudinary)
-    - `CLOUDINARY_API_SECRET`: (From Cloudinary)
-    - `FRONTEND_URL`: (You will update this later after deploying frontend, for now put `*` or leave blank if CORS allows)
+    - `MONGO_URI`
+    - `JWT_SECRET`
+    - `JWT_REFRESH_SECRET`
+    - `CLOUDINARY_CLOUD_NAME`
+    - `CLOUDINARY_API_KEY`
+    - `CLOUDINARY_API_SECRET`
+    - `CLIENT_URL`
 6.  Click **"Create Web Service"**.
-7.  **Wait**: Render will build and deploy. Once "Live", copy the **Service URL** (e.g., `https://knowledge-portal-backend.onrender.com`).
+7.  **Wait**: Render will build and deploy. Once "Live", copy the **Service URL**.
 
 ---
 

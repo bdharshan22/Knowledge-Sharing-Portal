@@ -1,4 +1,4 @@
-import express from 'express';
+okokimport express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -44,6 +44,11 @@ app.use('/api/community', communityRoutes);
 
 app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'OK', message: 'Server is running' });
+});
+
+// Root route for deployment health check
+app.get('/', (req, res) => {
+    res.send('API is running...');
 });
 
 app.listen(PORT, () => {
