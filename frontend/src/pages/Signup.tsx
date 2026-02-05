@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 
@@ -31,9 +32,10 @@ const Signup = () => {
         try {
             const { data } = await api.post('/auth/register', { name, email, password });
             auth?.login(data.token, { name: data.name, email: data.email, role: data.role, _id: data._id, points: data.points, badges: data.badges });
+            toast.success('Welcome to the community! 🎉');
             navigate('/');
         } catch {
-            alert('Registration failed');
+            toast.error('Registration failed. Please try again.');
         }
     };
 

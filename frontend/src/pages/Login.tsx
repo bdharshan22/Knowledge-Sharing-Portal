@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 
@@ -33,6 +34,7 @@ const Login = () => {
             setErrorMessage(null);
             const { data } = await api.post('/auth/login', { email, password });
             auth?.login(data.token, { name: data.name, email: data.email, role: data.role, _id: data._id, points: data.points, badges: data.badges });
+            toast.success('Welcome back!');
             navigate('/');
         } catch (error: any) {
             const message =
@@ -40,6 +42,7 @@ const Login = () => {
                 error?.message ||
                 'Login failed';
             setErrorMessage(message);
+            toast.error(message);
         }
     };
 

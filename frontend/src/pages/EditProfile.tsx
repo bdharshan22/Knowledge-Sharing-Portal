@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import { AuthContext } from '../context/AuthContext';
 import api from '../services/api';
 import Navbar from '../components/AppNavbar';
@@ -106,11 +107,12 @@ const EditProfile = () => {
                 if (token && data.user) {
                     auth.login(token, data.user);
                 }
+                toast.success('Profile updated successfully!');
                 navigate(`/users/${data.user._id}`);
             }
         } catch (err) {
             console.error('Failed to update profile', err);
-            alert('Failed to update profile');
+            toast.error('Failed to update profile');
         } finally {
             setLoading(false);
         }

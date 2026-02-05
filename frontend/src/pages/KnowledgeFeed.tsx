@@ -1,5 +1,6 @@
-import { useState, useEffect, useContext, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useContext, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import api from '../services/api';
 import Navbar from '../components/AppNavbar';
 import { AuthContext } from '../context/AuthContext';
@@ -136,6 +137,7 @@ const KnowledgeFeed = () => {
             );
         } catch (err) {
             console.error('Error liking post:', err);
+            // toast.error('Failed to like post'); // Keeping this silent as per instruction
         }
     };
 
@@ -476,8 +478,8 @@ const KnowledgeFeed = () => {
                                                 key={option}
                                                 onClick={() => setSortBy(option)}
                                                 className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${sortBy === option
-                                                        ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg'
-                                                        : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
+                                                    ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg'
+                                                    : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
                                                     }`}
                                             >
                                                 {option.charAt(0).toUpperCase() + option.slice(1)}
@@ -495,8 +497,8 @@ const KnowledgeFeed = () => {
                                                 key={type}
                                                 onClick={() => toggleFilter(selectedTypes, setSelectedTypes, type)}
                                                 className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${selectedTypes.includes(type)
-                                                        ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg'
-                                                        : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
+                                                    ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg'
+                                                    : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
                                                     }`}
                                             >
                                                 {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -517,8 +519,8 @@ const KnowledgeFeed = () => {
                                                     key={tag}
                                                     onClick={() => toggleFilter(selectedTags, setSelectedTags, tag)}
                                                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${selectedTags.includes(tag)
-                                                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md'
-                                                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                                                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md'
+                                                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                                                         }`}
                                                 >
                                                     #{tag}
@@ -593,233 +595,213 @@ const KnowledgeFeed = () => {
                     {/* Main Feed */}
                     <div className="lg:col-start-2 space-y-6">
                         {/* Feed Header */}
-                        {!loading && !user?.skills?.length ? (
-                            // Fresh State for New Users
-                            <div className="flex flex-col items-center justify-center py-12 text-center">
-                                <div className="bg-white p-10 rounded-3xl shadow-xl shadow-indigo-100/50 border border-indigo-50 max-w-2xl mx-auto transform hover:scale-[1.01] transition-transform duration-300">
-                                    <div className="w-24 h-24 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                                        <span className="text-4xl">✨</span>
+                        {!loading && !user?.skills?.length && (
+                            <div className="mb-8 bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm animate-fade-in-down">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-2xl">
+                                        ✨
                                     </div>
-                                    <h2 className="text-3xl font-display font-bold text-slate-900 mb-4">
-                                        Your Personalized Feed Awaits!
-                                    </h2>
-                                    <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                                        Your dashboard is currently <strong>fresh and empty</strong>. <br />
-                                        To fill it with knowledge that matters to you, please select your interests.
-                                    </p>
-
-                                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                                        <Link
-                                            to="/settings/profile"
-                                            className="btn-primary px-8 py-4 rounded-xl text-base font-bold shadow-lg shadow-cyan-200/50 flex items-center gap-2"
-                                        >
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                                            Customize My Feed
-                                        </Link>
-                                        <Link
-                                            to="/community"
-                                            className="btn-secondary px-8 py-4 rounded-xl text-base font-bold bg-white border-2 border-slate-100 hover:border-slate-300 text-slate-700"
-                                        >
-                                            Explore Community
-                                        </Link>
-                                    </div>
-
-                                    <div className="mt-10 pt-8 border-t border-slate-100 grid grid-cols-3 gap-4 text-center">
-                                        <div>
-                                            <div className="text-2xl font-bold text-slate-900 mb-1">0</div>
-                                            <div className="text-xs font-bold uppercase tracking-widest text-slate-400">Posts Scrolled</div>
-                                        </div>
-                                        <div>
-                                            <div className="text-2xl font-bold text-slate-900 mb-1">Fresh</div>
-                                            <div className="text-xs font-bold uppercase tracking-widest text-slate-400">Status</div>
-                                        </div>
-                                        <div>
-                                            <div className="text-2xl font-bold text-slate-900 mb-1">You</div>
-                                            <div className="text-xs font-bold uppercase tracking-widest text-slate-400">Focus</div>
-                                        </div>
+                                    <div>
+                                        <h3 className="font-bold text-slate-900 text-lg">Personalize Your Feed</h3>
+                                        <p className="text-slate-600 text-sm">Select your technical interests to see the most relevant content.</p>
                                     </div>
                                 </div>
-                            </div>
-                        ) : (
-                            // Existing Feed Logic for returning users
-                            <>
-                                <div className="flex items-center justify-between glass-card p-2 rounded-xl">
-                                    <div className="flex space-x-1">
-                                        {['all', 'question', 'article'].map(f => (
-                                            <button
-                                                key={f}
-                                                onClick={() => setFilter(f)}
-                                                className={`px-4 py-2 rounded-lg text-sm font-bold capitalize transition-all ${filter === f
-                                                    ? 'bg-white text-slate-900 shadow-md border border-slate-200'
-                                                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                                                    }`}
-                                            >
-                                                {f}s
-                                            </button>
-                                        ))}
-                                    </div>
-                                    <Link to="/create-post" className="p-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/20 transition-all hover:scale-105 active:scale-95">
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                                <div className="flex gap-3">
+                                    <Link
+                                        to="/settings/profile"
+                                        className="btn-primary px-5 py-2.5 text-sm whitespace-nowrap"
+                                    >
+                                        Customize Now
+                                    </Link>
+                                    <Link
+                                        to="/community"
+                                        className="btn-secondary bg-white px-5 py-2.5 text-sm whitespace-nowrap"
+                                    >
+                                        Explore
                                     </Link>
                                 </div>
+                            </div>
+                        )}
 
-                                {loading && posts.length === 0 ? (
-                                    <div className="space-y-4">
-                                        {[1, 2, 3].map((item) => (
-                                            <div key={`skeleton-${item}`} className="glass-card p-6 animate-pulse">
+                        {/* Existing Feed Logic */}
+                        <>
+                            <div className="flex items-center justify-between glass-card p-2 rounded-xl">
+                                <div className="flex space-x-1">
+                                    {['all', 'question', 'article'].map(f => (
+                                        <button
+                                            key={f}
+                                            onClick={() => setFilter(f)}
+                                            className={`px-4 py-2 rounded-lg text-sm font-bold capitalize transition-all ${filter === f
+                                                ? 'bg-white text-slate-900 shadow-md border border-slate-200'
+                                                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                                                }`}
+                                        >
+                                            {f}s
+                                        </button>
+                                    ))}
+                                </div>
+                                <Link to="/create-post" className="p-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/20 transition-all hover:scale-105 active:scale-95">
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                                </Link>
+                            </div>
+
+                            {loading && posts.length === 0 ? (
+                                <div className="space-y-4">
+                                    {[1, 2, 3].map((item) => (
+                                        <div key={`skeleton-${item}`} className="glass-card p-6 animate-pulse">
+                                            <div className="flex items-start justify-between mb-4">
+                                                <div className="flex items-center space-x-3">
+                                                    <div className="w-10 h-10 rounded-full bg-slate-200"></div>
+                                                    <div>
+                                                        <div className="h-3 w-28 bg-slate-200 rounded"></div>
+                                                        <div className="h-2 w-20 bg-slate-200 rounded mt-2"></div>
+                                                    </div>
+                                                </div>
+                                                <div className="h-6 w-16 bg-slate-200 rounded-full"></div>
+                                            </div>
+                                            <div className="h-4 w-3/4 bg-slate-200 rounded mb-3"></div>
+                                            <div className="h-3 w-full bg-slate-200 rounded mb-2"></div>
+                                            <div className="h-3 w-5/6 bg-slate-200 rounded"></div>
+                                            <div className="mt-4 flex gap-2">
+                                                <div className="h-6 w-14 bg-slate-200 rounded"></div>
+                                                <div className="h-6 w-16 bg-slate-200 rounded"></div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <motion.div layout className="space-y-4">
+                                    {filteredPosts.map((post, i) => {
+                                        const isLiked = user ? post.likes?.includes(user._id) : false;
+                                        const isSaved = user ? post.bookmarks?.includes(user._id) : false;
+                                        const isAuthor = user && post.author?._id === user._id;
+                                        const showFollow = !isAuthor && !!post.author?._id;
+                                        const isFollowing = !!post.isFollowingAuthor;
+                                        return (
+                                            <motion.div
+                                                key={post._id}
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: i * 0.05 }}
+                                                className="glass-card p-6 relative overflow-hidden group hover:border-cyan-500/30 transition-colors"
+                                            >
+                                                <div className={`absolute top-0 left-0 w-1 h-full ${post.type === 'question' ? 'bg-orange-500' : 'bg-blue-500'
+                                                    }`}></div>
+
                                                 <div className="flex items-start justify-between mb-4">
                                                     <div className="flex items-center space-x-3">
-                                                        <div className="w-10 h-10 rounded-full bg-slate-200"></div>
+                                                        <img
+                                                            src={post.author?.avatar || `https://ui-avatars.com/api/?name=${post.author?.name || 'User'}&background=e2e8f0&color=0f172a`}
+                                                            className="w-10 h-10 rounded-full border border-slate-200"
+                                                        />
                                                         <div>
-                                                            <div className="h-3 w-28 bg-slate-200 rounded"></div>
-                                                            <div className="h-2 w-20 bg-slate-200 rounded mt-2"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="h-6 w-16 bg-slate-200 rounded-full"></div>
-                                                </div>
-                                                <div className="h-4 w-3/4 bg-slate-200 rounded mb-3"></div>
-                                                <div className="h-3 w-full bg-slate-200 rounded mb-2"></div>
-                                                <div className="h-3 w-5/6 bg-slate-200 rounded"></div>
-                                                <div className="mt-4 flex gap-2">
-                                                    <div className="h-6 w-14 bg-slate-200 rounded"></div>
-                                                    <div className="h-6 w-16 bg-slate-200 rounded"></div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <motion.div layout className="space-y-4">
-                                        {filteredPosts.map((post, i) => {
-                                            const isLiked = user ? post.likes?.includes(user._id) : false;
-                                            const isSaved = user ? post.bookmarks?.includes(user._id) : false;
-                                            const isAuthor = user && post.author?._id === user._id;
-                                            const showFollow = !isAuthor && !!post.author?._id;
-                                            const isFollowing = !!post.isFollowingAuthor;
-                                            return (
-                                                <motion.div
-                                                    key={post._id}
-                                                    initial={{ opacity: 0, y: 20 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    transition={{ delay: i * 0.05 }}
-                                                    className="glass-card p-6 relative overflow-hidden group hover:border-cyan-500/30 transition-colors"
-                                                >
-                                                    <div className={`absolute top-0 left-0 w-1 h-full ${post.type === 'question' ? 'bg-orange-500' : 'bg-blue-500'
-                                                        }`}></div>
-
-                                                    <div className="flex items-start justify-between mb-4">
-                                                        <div className="flex items-center space-x-3">
-                                                            <img
-                                                                src={post.author?.avatar || `https://ui-avatars.com/api/?name=${post.author?.name || 'User'}&background=e2e8f0&color=0f172a`}
-                                                                className="w-10 h-10 rounded-full border border-slate-200"
-                                                            />
-                                                            <div>
-                                                                {post.author?._id ? (
-                                                                    <Link to={`/users/${post.author._id}`} className="font-bold text-slate-900 hover:text-cyan-600 transition-colors text-sm block">
-                                                                        {post.author.name}
-                                                                    </Link>
-                                                                ) : (
-                                                                    <span className="font-bold text-slate-900 text-sm block">
-                                                                        {post.author?.name || 'Unknown User'}
-                                                                    </span>
-                                                                )}
-                                                                <div className="text-xs text-slate-500 font-medium">
-                                                                    {new Date(post.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-                                                                </div>
+                                                            {post.author?._id ? (
+                                                                <Link to={`/users/${post.author._id}`} className="font-bold text-slate-900 hover:text-cyan-600 transition-colors text-sm block">
+                                                                    {post.author.name}
+                                                                </Link>
+                                                            ) : (
+                                                                <span className="font-bold text-slate-900 text-sm block">
+                                                                    {post.author?.name || 'Unknown User'}
+                                                                </span>
+                                                            )}
+                                                            <div className="text-xs text-slate-500 font-medium">
+                                                                {new Date(post.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                                                             </div>
                                                         </div>
-                                                        <div className="flex items-center gap-2">
-                                                            <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${post.type === 'question' ? 'bg-orange-100 text-orange-700 border-orange-200' : 'bg-blue-100 text-blue-700 border-blue-200'
-                                                                }`}>
-                                                                {post.type}
-                                                            </span>
-                                                            {showFollow && (
-                                                                <button
-                                                                    onClick={() => handleFollow(post.author._id)}
-                                                                    className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border transition-colors ${isFollowing
-                                                                        ? 'bg-slate-900 text-white border-slate-900'
-                                                                        : 'bg-white text-slate-600 border-slate-200 hover:text-cyan-600 hover:border-cyan-200'
-                                                                        }`}
-                                                                >
-                                                                    {isFollowing ? 'Following' : 'Follow'}
-                                                                </button>
-                                                            )}
-                                                        </div>
                                                     </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${post.type === 'question' ? 'bg-orange-100 text-orange-700 border-orange-200' : 'bg-blue-100 text-blue-700 border-blue-200'
+                                                            }`}>
+                                                            {post.type}
+                                                        </span>
+                                                        {showFollow && (
+                                                            <button
+                                                                onClick={() => handleFollow(post.author._id)}
+                                                                className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border transition-colors ${isFollowing
+                                                                    ? 'bg-slate-900 text-white border-slate-900'
+                                                                    : 'bg-white text-slate-600 border-slate-200 hover:text-cyan-600 hover:border-cyan-200'
+                                                                    }`}
+                                                            >
+                                                                {isFollowing ? 'Following' : 'Follow'}
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
 
-                                                    <Link to={`/posts/${post._id}`} className="block group-hover:opacity-100 transition-opacity">
-                                                        <h2 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-cyan-600 transition-colors">
-                                                            {post.title}
-                                                        </h2>
-                                                        <p className="text-slate-600 line-clamp-2 mb-4 text-sm leading-relaxed">
-                                                            {post.excerpt || (post.content ? post.content.replace(/[#*`]/g, '') : '')}
-                                                        </p>
-                                                    </Link>
+                                                <Link to={`/posts/${post._id}`} className="block group-hover:opacity-100 transition-opacity">
+                                                    <h2 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-cyan-600 transition-colors">
+                                                        {post.title}
+                                                    </h2>
+                                                    <p className="text-slate-600 line-clamp-2 mb-4 text-sm leading-relaxed">
+                                                        {post.excerpt || (post.content ? post.content.replace(/[#*`]/g, '') : '')}
+                                                    </p>
+                                                </Link>
 
-                                                    {post.feedReasons && post.feedReasons.length > 0 && (
-                                                        <div className="flex flex-wrap gap-2 mb-4">
-                                                            {post.feedReasons.map((reason, idx) => (
-                                                                <span key={`${post._id}-reason-${idx}`} className="text-[10px] uppercase tracking-widest font-bold text-indigo-700 bg-indigo-100 px-2 py-1 rounded-full border border-indigo-200">
-                                                                    {reason}
-                                                                </span>
-                                                            ))}
-                                                        </div>
-                                                    )}
-
+                                                {post.feedReasons && post.feedReasons.length > 0 && (
                                                     <div className="flex flex-wrap gap-2 mb-4">
-                                                        {post.tags?.slice(0, 3).map((tag: string) => (
-                                                            <span key={tag} className="text-xs font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-1 rounded hover:text-cyan-600 transition-colors">
-                                                                #{tag}
+                                                        {post.feedReasons.map((reason, idx) => (
+                                                            <span key={`${post._id}-reason-${idx}`} className="text-[10px] uppercase tracking-widest font-bold text-indigo-700 bg-indigo-100 px-2 py-1 rounded-full border border-indigo-200">
+                                                                {reason}
                                                             </span>
                                                         ))}
                                                     </div>
+                                                )}
 
-                                                    <div className="flex items-center justify-between pt-4 border-t border-slate-200">
-                                                        <div className="flex gap-4">
-                                                            <button
-                                                                onClick={() => handleLike(post._id)}
-                                                                className={`flex items-center text-sm transition-colors ${isLiked ? 'text-cyan-700' : 'text-slate-600 group-hover:text-slate-700'}`}
-                                                            >
-                                                                <svg className="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                                                                {post.likes?.length || 0}
-                                                            </button>
-                                                            <div className="flex items-center text-slate-600 text-sm group-hover:text-slate-700 transition-colors">
-                                                                <svg className="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-                                                                {post.comments?.length || 0}
-                                                            </div>
-                                                        </div>
+                                                <div className="flex flex-wrap gap-2 mb-4">
+                                                    {post.tags?.slice(0, 3).map((tag: string) => (
+                                                        <span key={tag} className="text-xs font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-1 rounded hover:text-cyan-600 transition-colors">
+                                                            #{tag}
+                                                        </span>
+                                                    ))}
+                                                </div>
 
-                                                        <div className="flex gap-2 items-center">
-                                                            <button
-                                                                onClick={() => handleSave(post._id)}
-                                                                className={`text-xs font-bold uppercase tracking-wide px-2 py-1 rounded border transition-colors ${isSaved ? 'text-cyan-700 bg-cyan-100 border-cyan-200' : 'text-slate-600 bg-slate-100 border-slate-200 hover:text-cyan-600'}`}
-                                                            >
-                                                                {isSaved ? 'Saved' : 'Save'}
-                                                            </button>
-                                                            {isAuthor && (
-                                                                <Link
-                                                                    to={`/posts/${post._id}`}
-                                                                    className="text-xs font-bold uppercase tracking-wide px-2 py-1 rounded border border-slate-200 text-slate-600 hover:text-cyan-600 bg-white"
-                                                                >
-                                                                    Edit
-                                                                </Link>
-                                                            )}
-                                                            {isAuthor && (
-                                                                <button
-                                                                    onClick={() => handleDelete(post._id)}
-                                                                    className="text-xs font-bold uppercase tracking-wide px-2 py-1 rounded border border-red-200 text-red-600 hover:text-red-700 bg-red-50"
-                                                                >
-                                                                    Delete
-                                                                </button>
-                                                            )}
+                                                <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+                                                    <div className="flex gap-4">
+                                                        <button
+                                                            onClick={() => handleLike(post._id)}
+                                                            className={`flex items-center text-sm transition-colors ${isLiked ? 'text-cyan-700' : 'text-slate-600 group-hover:text-slate-700'}`}
+                                                        >
+                                                            <svg className="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                                                            {post.likes?.length || 0}
+                                                        </button>
+                                                        <div className="flex items-center text-slate-600 text-sm group-hover:text-slate-700 transition-colors">
+                                                            <svg className="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                                                            {post.comments?.length || 0}
                                                         </div>
                                                     </div>
-                                                </motion.div>
-                                            );
-                                        })}
-                                    </motion.div>
-                                )}
-                            </>
-                        )}
+
+                                                    <div className="flex gap-2 items-center">
+                                                        <button
+                                                            onClick={() => handleSave(post._id)}
+                                                            className={`text-xs font-bold uppercase tracking-wide px-2 py-1 rounded border transition-colors ${isSaved ? 'text-cyan-700 bg-cyan-100 border-cyan-200' : 'text-slate-600 bg-slate-100 border-slate-200 hover:text-cyan-600'}`}
+                                                        >
+                                                            {isSaved ? 'Saved' : 'Save'}
+                                                        </button>
+                                                        {isAuthor && (
+                                                            <Link
+                                                                to={`/posts/${post._id}`}
+                                                                className="text-xs font-bold uppercase tracking-wide px-2 py-1 rounded border border-slate-200 text-slate-600 hover:text-cyan-600 bg-white"
+                                                            >
+                                                                Edit
+                                                            </Link>
+                                                        )}
+                                                        {isAuthor && (
+                                                            <button
+                                                                onClick={() => handleDelete(post._id)}
+                                                                className="text-xs font-bold uppercase tracking-wide px-2 py-1 rounded border border-red-200 text-red-600 hover:text-red-700 bg-red-50"
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        );
+                                    })}
+                                </motion.div>
+                            )}
+                        </>
+
                     </div>
 
                     {/* Right Sidebar (Stats/Leaderboard) */}

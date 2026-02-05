@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import api from '../services/api';
 import Navbar from '../components/AppNavbar';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -200,10 +201,11 @@ const CreatePost = () => {
 
             const { data } = await api.post('/posts', postData);
             clearDraft(); // Clear draft after successful post
+            toast.success('Post published successfully! 🎉');
             navigate(`/posts/${data._id}?refresh=true`);
         } catch (error) {
             console.error('Create post failed', error);
-            alert('Failed to create post');
+            toast.error('Failed to create post. Please try again.');
         } finally {
             setLoading(false);
         }

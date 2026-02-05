@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext, useCallback, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { toast } from 'react-hot-toast';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -113,12 +114,13 @@ const PostDetail = () => {
     }, [fetchPost]);
 
     const handleDelete = async () => {
-        if (window.confirm('Are you sure you want to delete this post?')) {
+        if (window.confirm('Are you sure you want to delete this post? This cannot be undone.')) {
             try {
                 await api.delete(`/posts/${id}`);
+                toast.success('Post deleted successfully');
                 navigate('/');
             } catch {
-                alert('Failed to delete post');
+                toast.error('Failed to delete post');
             }
         }
     };
@@ -134,6 +136,7 @@ const PostDetail = () => {
             fetchPost();
         } catch (error) {
             console.error('Error liking post:', error);
+            toast.error('Failed to like post');
         }
     };
 
@@ -146,8 +149,10 @@ const PostDetail = () => {
         try {
             await api.put(`/posts/${id}/bookmark`);
             fetchPost();
+            toast.success('Bookmark updated');
         } catch (error) {
             console.error('Error saving post:', error);
+            toast.error('Failed to update bookmark');
         }
     };
 
@@ -162,11 +167,12 @@ const PostDetail = () => {
             setPost(prev => prev ? { ...prev, summary: { ...(prev.summary || {}), status: 'processing' } } : prev);
             const { data } = await api.post(`/posts/${id}/summary`);
             setPost(prev => prev ? { ...prev, summary: data } : prev);
+            toast.success('Summary generated successfully!');
         } catch (error: any) {
             const message = error?.response?.data?.message || 'Failed to generate summary';
             setPost(prev => prev ? { ...prev, summary: { ...(prev.summary || {}), status: 'error', error: message } } : prev);
             console.error('Failed to generate summary', error);
-            alert(message);
+            toast.error(message);
         } finally {
             setSummaryLoading(false);
         }
@@ -186,10 +192,10 @@ const PostDetail = () => {
 
         try {
             await api.post(`/posts/${id}/report`, { reason, description });
-            alert('Thanks. Your report has been submitted.');
+            toast.success('Thanks! Your report has been submitted.');
         } catch (error) {
             console.error('Failed to report post', error);
-            alert('Failed to report post');
+            toast.error('Failed to submit report');
         }
     };
 
@@ -204,8 +210,10 @@ const PostDetail = () => {
             setFollowLoading(true);
             const { data } = await api.put(`/users/${post.author._id}/follow`);
             setIsFollowingAuthor(!!data?.isFollowing);
+            toast.success(data?.isFollowing ? `You are now following ${post.author.name}` : `Unfollowed ${post.author.name}`);
         } catch (error) {
             console.error('Failed to toggle follow', error);
+            toast.error('Failed to update follow status');
         } finally {
             setFollowLoading(false);
         }
@@ -261,15 +269,18 @@ const PostDetail = () => {
                     ? { ...c, posts: (c.posts || []).filter((item: any) => (typeof item === 'string' ? item : item._id) !== post._id) }
                     : c
                 ));
+                toast.success('Removed from collection');
             } else {
                 await api.post(`/users/collections/${collectionId}/posts`, { postId: post._id });
                 setCollections(prev => prev.map(c => c._id === collectionId
                     ? { ...c, posts: [...(c.posts || []), post._id] }
                     : c
                 ));
+                toast.success('Added to collection');
             }
         } catch (error) {
             console.error('Failed to update collection', error);
+            toast.error('Failed to update collection');
         }
     };
 
@@ -280,8 +291,10 @@ const PostDetail = () => {
             const { data } = await api.post('/users/collections', { name: newCollectionName.trim() });
             setCollections(data.collections || []);
             setNewCollectionName('');
+            toast.success('Collection created!');
         } catch (error) {
             console.error('Failed to create collection', error);
+            toast.error('Failed to create collection');
         } finally {
             setCreatingCollection(false);
         }
@@ -324,9 +337,10 @@ const PostDetail = () => {
             });
             setPost(data.post || data);
             setIsEditing(false);
+            toast.success('Post updated successfully!');
         } catch (error) {
             console.error('Failed to update post', error);
-            alert('Failed to update post');
+            toast.error('Failed to update post');
         }
     };
 
@@ -334,8 +348,10 @@ const PostDetail = () => {
         try {
             const { data } = await api.put(`/posts/${id}/answers/${answerId}/accept`);
             setPost(prev => prev ? { ...prev, answers: data, acceptedAnswer: answerId } : null);
+            toast.success('Answer marked as accepted!');
         } catch (error) {
             console.error('Failed to accept answer', error);
+            toast.error('Failed to accept answer');
         }
     };
 
@@ -352,6 +368,7 @@ const PostDetail = () => {
             });
         } catch (error) {
             console.error('Failed to vote', error);
+            toast.error('Failed to submit vote');
         }
     };
 
@@ -365,13 +382,15 @@ const PostDetail = () => {
         try {
             if (post?.type === 'question') {
                 await api.post(`/posts/${id}/answers`, { content: commentText });
+                toast.success('Answer posted successfully!');
             } else {
                 await api.post(`/posts/${id}/comment`, { text: commentText });
+                toast.success('Comment posted successfully!');
             }
             setCommentText('');
             fetchPost();
         } catch {
-            alert('Failed to submit');
+            toast.error('Failed to submit response');
         }
     };
 
@@ -409,9 +428,10 @@ const PostDetail = () => {
             }
 
             pdf.save(`${post.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`);
+            toast.success('PDF generated successfully!');
         } catch (error) {
             console.error('Failed to generate PDF', error);
-            alert('Failed to generate PDF');
+            toast.error('Failed to generate PDF');
         } finally {
             setIsPdfGenerating(false);
         }

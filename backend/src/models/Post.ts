@@ -183,7 +183,7 @@ postSchema.index({ tags: 1 });
 postSchema.index({ type: 1, status: 1 });
 postSchema.index({ views: -1 });
 postSchema.index({ 'analytics.engagementScore': -1 });
-postSchema.index({ slug: 1 });
+
 postSchema.index({ featured: 1, trending: 1 });
 
 export const Post = mongoose.model('Post', postSchema);

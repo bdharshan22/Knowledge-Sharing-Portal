@@ -39,9 +39,20 @@ const HomeRoute = () => {
   return auth?.user ? <Navigate to="/dashboard" replace /> : <LandingPage />;
 };
 
+import { Toaster } from 'react-hot-toast';
+
 function App() {
   return (
     <AuthProvider>
+      <Toaster
+        position="top-right"
+        containerStyle={{ zIndex: 99999 }}
+        toastOptions={{
+          style: {
+            zIndex: 99999,
+          },
+        }}
+      />
       <Router>
         <Routes>
           {/* Public routes */}

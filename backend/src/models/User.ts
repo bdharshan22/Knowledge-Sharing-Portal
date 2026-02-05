@@ -110,8 +110,6 @@ userSchema.methods.updateLastActive = function () {
 };
 
 // Indexes for better performance
-userSchema.index({ email: 1 });
-userSchema.index({ username: 1 });
 userSchema.index({ lastActive: -1 });
 
 export const User = mongoose.model('User', userSchema);

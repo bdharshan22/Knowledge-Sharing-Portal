@@ -45,64 +45,228 @@ const seedPosts = async () => {
         const [userA, userB, userC] = users;
 
         const samples = [
+            // Articles
             {
-                title: 'Building a Reliable React Data Fetching Layer',
-                content: 'A practical guide to caching, request deduping, and optimistic updates. Learn how to avoid flicker and keep UI state consistent during slow networks.',
+                title: 'Getting Started with React 19',
+                content: 'React 19 brings exciting new features like the `use` hook, Actions, and enhanced Server Components support. In this guide, we explore how to migrate your existing app and take advantage of these performance improvements.',
                 author: userA._id,
                 category: 'Frontend',
                 type: 'article',
-                tags: ['react', 'state', 'performance'],
-                difficulty: 'Intermediate',
-                views: 182,
-                likes: [userB._id],
-                comments: [{ text: 'Clear and actionable breakdown. Great patterns!', user: userB._id }]
+                tags: ['react', 'javascript', 'frontend'],
+                difficulty: 'Beginner',
+                views: 1250,
+                likes: [userB._id, userC._id],
+                comments: [{ text: 'Great overview! The new compiler looks promising.', user: userB._id }]
             },
             {
-                title: 'Question: How do you structure large TypeScript projects?',
-                content: 'I am struggling with folder structure and shared types. Any tips for keeping a large TypeScript codebase maintainable?',
+                title: 'System Design: Scaling to 1 Million Users',
+                content: 'Scaling a system requires a deep understanding of load balancing, caching strategies (Redis/Memcached), database sharding, and asynchronous processing with message queues. Here is a blueprint for high availability.',
+                author: userC._id,
+                category: 'Backend',
+                type: 'article',
+                tags: ['system-design', 'scalability', 'architecture'],
+                difficulty: 'Advanced',
+                views: 3400,
+                likes: [userA._id, userB._id],
+                comments: [{ text: 'This helped me ace my interview!', user: userA._id }]
+            },
+            {
+                title: 'Mastering TypeScript Generics',
+                content: 'Generics allow you to write reusable, type-safe code. We cover constraints, default types, and utility types like Partial, Pick, and Omit to level up your TS skills.',
                 author: userB._id,
-                category: 'Architecture',
+                category: 'Languages',
+                type: 'article',
+                tags: ['typescript', 'coding', 'tutorial'],
+                difficulty: 'Intermediate',
+                views: 890,
+                likes: [userC._id]
+            },
+            {
+                title: 'The Future of AI Agents',
+                content: 'Autonomous agents are the next frontier in AI. From AutoGPT to custom LangChain implementations, learn how agents are changing the way we automate workflows.',
+                author: userA._id,
+                category: 'AI/ML',
+                type: 'article',
+                tags: ['ai', 'agents', 'future-tech'],
+                difficulty: 'Intermediate',
+                views: 2100,
+                likes: [userB._id]
+            },
+            // Questions
+            {
+                title: 'Question: How to fix CORS errors in production?',
+                content: 'I am getting "Access-Control-Allow-Origin" errors when my frontend calls my backend. I have configured `cors` in Express but it still fails. Help?',
+                author: userB._id,
+                category: 'Backend',
                 type: 'question',
-                tags: ['typescript', 'architecture', 'best-practices'],
+                tags: ['cors', 'express', 'error-handling'],
                 difficulty: 'Beginner',
-                views: 96,
-                likes: [userA._id],
+                views: 450,
+                likes: [userC._id],
                 answers: [
                     {
-                        content: 'Start with feature-based folders, keep shared types in a common package, and use strict boundaries with lint rules.',
-                        author: userA._id,
+                        content: 'Make sure your `origin` in the CORS config matches your frontend URL exactly (no trailing slash). Also check if you are sending credentials/cookies.',
+                        author: userC._id,
+                        votes: { up: [userA._id], down: [] }
+                    }
+                ]
+            },
+            {
+                title: 'Question: Best way to handle global state in 2024?',
+                content: 'Redux, Zustand, Recoil, or just Context API? I am starting a mid-sized dashboard app and confused about the choices.',
+                author: userA._id,
+                category: 'Frontend',
+                type: 'question',
+                tags: ['state-management', 'react', 'discussion'],
+                difficulty: 'Intermediate',
+                views: 670,
+                likes: [userB._id],
+                answers: [
+                    {
+                        content: 'Zustand is very popular right now for its simplicity and small bundle size. Use Context for static data (theme, auth) and Zustand for complex UI state.',
+                        author: userB._id,
                         votes: { up: [userC._id], down: [] }
                     }
                 ]
             },
             {
-                title: 'Designing APIs That Scale With Product Growth',
-                content: 'Focus on clear resource naming, predictable pagination, and versioning strategy. This post covers pitfalls to avoid and patterns that keep APIs flexible.',
+                title: 'Question: Docker vs Kubernetes for small projects?',
+                content: 'I have a simple MERN stack app. Is it worth learning Kubernetes or should I just stick to Docker Compose or a PAAS like Render?',
                 author: userC._id,
-                category: 'Backend',
+                category: 'DevOps',
+                type: 'question',
+                tags: ['docker', 'kubernetes', 'devops'],
+                difficulty: 'Beginner',
+                views: 320,
+                likes: [userA._id],
+                answers: [
+                    {
+                        content: 'For small projects, K8s is overkill. Stick to Render/Vercel or Docker Compose on a VPS. It reduces maintenance overhead significantly.',
+                        author: userA._id,
+                        votes: { up: [userB._id], down: [] }
+                    }
+                ]
+            },
+            // New Content
+            {
+                title: 'Modern CSS: Container Queries & :has()',
+                content: 'CSS has evolved significantly. Container queries allow components to adapt to their parent container, not just the viewport. The :has() pseudo-class (parent selector) finally solves complex layout challenges without JS.',
+                author: userB._id,
+                category: 'Frontend',
                 type: 'article',
-                tags: ['api', 'backend', 'design'],
+                tags: ['css', 'web-design', 'responsive'],
+                difficulty: 'Intermediate',
+                views: 540,
+                likes: [userA._id, userC._id]
+            },
+            {
+                title: 'Microservices vs Monolith: When to Split?',
+                content: 'Don’t start with microservices. Start with a refined monolith. Split only when organizational scaling (independent teams) or distinct scaling profiles (CPU vs I/O bound modules) demand it.',
+                author: userC._id,
+                category: 'Architecture',
+                type: 'article',
+                tags: ['microservices', 'system-design', 'backend'],
                 difficulty: 'Advanced',
-                views: 210,
+                views: 2800,
                 likes: [userA._id, userB._id]
             },
             {
-                title: 'Question: How do you balance speed vs quality for side projects?',
-                content: 'I want to ship quickly but not accrue too much technical debt. How do you decide what is good enough?',
+                title: 'Question: How to handle JWT token expiration gracefully?',
+                content: 'My users get logged out abruptly when the token expires. How do I implement silent refresh with Axios interceptors?',
                 author: userA._id,
-                category: 'Career',
+                category: 'Security',
                 type: 'question',
-                tags: ['productivity', 'engineering', 'growth'],
+                tags: ['jwt', 'auth', 'axios'],
                 difficulty: 'Intermediate',
-                views: 74,
-                likes: [userC._id],
+                views: 890,
+                likes: [userB._id],
                 answers: [
                     {
-                        content: 'Define a minimal quality bar, write tests for core flows, and backlog the rest. Timebox refactors.',
+                        content: 'Store a refresh token in an HttpOnly cookie. In your axios response interceptor, catch 401s, call /refresh-token, update the header, and retry the original request.',
                         author: userC._id,
                         votes: { up: [userB._id], down: [] }
                     }
                 ]
+            },
+            {
+                title: '10 Essential VS Code Extensions for 2024',
+                content: 'Boost your productivity with these extensions: 1. Console Ninja (inline logs), 2. Pretty TypeScript Errors, 3. Tailwind CSS IntelliSense, 4. GitLens, 5. Error Lens. What are your favorites?',
+                author: userB._id,
+                category: 'Tools',
+                type: 'resource',
+                tags: ['vscode', 'productivity', 'tools'],
+                difficulty: 'Beginner',
+                views: 4100,
+                likes: [userA._id, userC._id]
+            },
+            {
+                title: 'Understanding Database Indexing',
+                content: 'A B-Tree index speeds up reads but slows down writes. Learn when to use compound indexes, how verify cardinality, and why "Select *" kills performance.',
+                author: userC._id,
+                category: 'Database',
+                type: 'tutorial',
+                tags: ['database', 'sql', 'mongodb', 'performance'],
+                difficulty: 'Intermediate',
+                views: 1100,
+                likes: [userA._id]
+            },
+            {
+                title: 'Question: Career Path - Manager vs Individual Contributor?',
+                content: 'I have been a Senior Dev for 2 years. I am being offered a Team Lead role. I am worried I will code less. Is the switch worth it?',
+                author: userA._id,
+                category: 'Career',
+                type: 'discussion',
+                tags: ['career', 'management', 'engineering'],
+                difficulty: 'Intermediate',
+                views: 2200,
+                likes: [userB._id, userC._id],
+                answers: [
+                    {
+                        content: 'It is a pendulum. You can try management and switch back to IC (Staff Engineer) later. The skills you learn in people management make you a better engineer.',
+                        author: userB._id,
+                        votes: { up: [userC._id], down: [] }
+                    }
+                ]
+            },
+            {
+                title: 'Introduction to GraphQL with Apollo',
+                content: 'GraphQL prevents over-fetching. We will build a simple server with Apollo and connect it to a React frontend using valid queries.',
+                author: userB._id,
+                category: 'Backend',
+                type: 'tutorial',
+                tags: ['graphql', 'apollo', 'api'],
+                difficulty: 'Beginner',
+                views: 650,
+                likes: [userA._id]
+            },
+            {
+                title: 'Question: Best practices for React Performance?',
+                content: 'My app feels sluggish on mobile. I have used React.memo everywhere but it is not helping. What should I profile first?',
+                author: userC._id,
+                category: 'Frontend',
+                type: 'question',
+                tags: ['react', 'performance', 'mobile'],
+                difficulty: 'Advanced',
+                views: 340,
+                likes: [userB._id],
+                answers: [
+                    {
+                        content: 'Check your bundle size first. Are you lazy loading routes? Then check for large lists - use virtualization (react-window). "Memo everywhere" can actually hurt if props change often.',
+                        author: userA._id,
+                        votes: { up: [userB._id], down: [] }
+                    }
+                ]
+            },
+            {
+                title: 'The Rise of Serverless logic',
+                content: 'Serverless functions (Lambda, Vercel Functions) allow you to ship backend logic without managing servers. Perfect for event-driven architectures and webhooks.',
+                author: userA._id,
+                category: 'Cloud',
+                type: 'article',
+                tags: ['serverless', 'aws', 'cloud'],
+                difficulty: 'Intermediate',
+                views: 1500,
+                likes: [userC._id]
             }
         ];
 

@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import Navbar from '../components/AppNavbar';
@@ -167,8 +168,10 @@ const Profile = () => {
                     }
                 };
             });
+            toast.success(nowFollowing ? `You are now following ${user.name}` : `Unfollowed ${user.name}`);
         } catch (e) {
             console.error('Failed to toggle follow', e);
+            toast.error('Failed to update follow status');
         } finally {
             setFollowLoading(false);
         }
