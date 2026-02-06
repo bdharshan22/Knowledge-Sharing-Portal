@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import helmet from 'helmet';
 import authRoutes from './routes/authRoutes';
 import postRoutes from './routes/postRoutes';
 import userRoutes from './routes/userRoutes';
@@ -15,6 +16,12 @@ const PORT = process.env.PORT || 5001;
 mongoose.connect(process.env.MONGO_URI as string)
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
+
+// Security headers
+app.use(helmet({
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 
 app.use(cors());
 app.use(express.json());
