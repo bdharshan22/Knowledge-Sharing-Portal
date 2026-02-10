@@ -20,10 +20,14 @@ mongoose.connect(process.env.MONGO_URI as string)
 // Security headers
 app.use(helmet({
     crossOriginOpenerPolicy: { policy: "unsafe-none" },
-    crossOriginResourcePolicy: { policy: "cross-origin" }
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    contentSecurityPolicy: false, // Disable CSP for debugging
 }));
 
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allow all origins for debugging
+    credentials: true
+}));
 app.use(express.json());
 
 // Debug logging
