@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
+
 // import { AuthContext } from '../context/AuthContext';
 
 const SubmitProject = () => {
@@ -39,25 +40,22 @@ const SubmitProject = () => {
                 formData.append('file', coverImage);
                 formData.append('type', 'image'); // Hint for backend
 
-                const uploadRes = await axios.post('http://localhost:5000/api/upload', formData, {
+                const uploadRes = await api.post('/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${token}`
                     }
                 });
                 coverImageUrl = uploadRes.data.url;
             }
 
             // 2. Create Project
-            await axios.post('http://localhost:5000/api/projects', {
+            await api.post('/projects', {
                 title,
                 description,
                 repoLink,
                 demoLink,
                 coverImage: coverImageUrl,
                 tags: tags.split(',').map(t => t.trim()).filter(Boolean)
-            }, {
-                headers: { Authorization: `Bearer ${token}` }
             });
 
             // 3. Redirect

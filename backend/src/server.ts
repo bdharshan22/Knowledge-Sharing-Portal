@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI as string)
 
 // Security headers
 app.use(helmet({
-    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+    crossOriginOpenerPolicy: { policy: "unsafe-none" },
     crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 

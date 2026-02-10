@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { Link } from 'react-router-dom';
 
 interface LeaderboardUser {
@@ -27,7 +27,7 @@ const Leaderboard = () => {
     const fetchLeaderboard = async () => {
         setLoading(true);
         try {
-            const res = await axios.get(`http://localhost:5000/api/users/leaderboard?period=${period}`);
+            const res = await api.get(`/users/leaderboard?period=${period}`);
             setUsers(res.data.leaderboard);
         } catch (err) {
             console.error(err);
@@ -51,8 +51,8 @@ const Leaderboard = () => {
                             key={p}
                             onClick={() => setPeriod(p)}
                             className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${period === p
-                                    ? 'bg-indigo-50 text-indigo-700'
-                                    : 'text-gray-600 hover:text-gray-900'
+                                ? 'bg-indigo-50 text-indigo-700'
+                                : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
                             {p === 'all' ? 'All Time' : p === 'month' ? 'This Month' : 'This Week'}
@@ -82,9 +82,9 @@ const Leaderboard = () => {
                                 <tr key={user._id} className="hover:bg-gray-50 transition-colors">
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <div className={`flex items-center justify-center w-8 h-8 rounded-full font-bold ${idx === 0 ? 'bg-yellow-100 text-yellow-700' :
-                                                idx === 1 ? 'bg-gray-100 text-gray-700' :
-                                                    idx === 2 ? 'bg-orange-100 text-orange-800' :
-                                                        'text-gray-500'
+                                            idx === 1 ? 'bg-gray-100 text-gray-700' :
+                                                idx === 2 ? 'bg-orange-100 text-orange-800' :
+                                                    'text-gray-500'
                                             }`}>
                                             {idx + 1}
                                         </div>
