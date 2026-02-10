@@ -31,7 +31,7 @@ const SubmitProject = () => {
         setUploading(true);
 
         try {
-            const token = localStorage.getItem('token');
+
             let coverImageUrl = '';
 
             // 1. Upload Image if exists
