@@ -12,8 +12,6 @@
   <p align="center">
     A professional-grade, full-stack platform for collaborative learning, knowledge exchange, and community building.
     <br />
-    <a href="#demo"><strong>Explore the docs »</strong></a>
-    <br />
     <br />
     <a href="https://github.com/bdharshan22/Knowledge-Sharing-Portal/issues">Report Bug</a>
     
