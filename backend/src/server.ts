@@ -25,7 +25,11 @@ app.use(helmet({
 }));
 
 app.use(cors({
-    origin: '*', // Allow all origins for debugging
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        callback(null, true);
+    },
     credentials: true
 }));
 app.use(express.json());
