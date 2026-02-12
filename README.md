@@ -217,12 +217,3 @@ Contributions are what make the open source community such an amazing place to l
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
----
-
-## 📞 Contact
-
-**Project Team** - [GitHub Profile](https://github.com/bdharshan22)
-
-Project Link: [https://github.com/bdharshan22/Knowledge-Sharing-Portal](https://github.com/bdharshan22/Knowledge-Sharing-Portal)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
