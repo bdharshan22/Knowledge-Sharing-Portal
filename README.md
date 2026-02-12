@@ -15,11 +15,8 @@
     <a href="#demo"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="#live-demo">View Demo</a>
-    ·
     <a href="https://github.com/bdharshan22/Knowledge-Sharing-Portal/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/bdharshan22/Knowledge-Sharing-Portal/issues">Request Feature</a>
+    
   </p>
 </div>
 
