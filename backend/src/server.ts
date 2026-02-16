@@ -17,6 +17,13 @@ mongoose.connect(process.env.MONGO_URI as string)
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
 
+// Detailed Request Logging (Debug)
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+    console.log('Headers:', JSON.stringify(req.headers, null, 2));
+    next();
+});
+
 // Security headers
 app.use(helmet({
     crossOriginOpenerPolicy: { policy: "unsafe-none" },
