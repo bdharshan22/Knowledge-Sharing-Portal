@@ -62,6 +62,7 @@ const PollWidget = ({ poll, onVote }: PollWidgetProps) => {
                     const percentage = totalVotes === 0 ? 0 : Math.round((votes / totalVotes) * 100);
                     const isSelected = userVoteIndex === idx;
 
+
                     return (
                         <button
                             key={idx}
@@ -70,11 +71,11 @@ const PollWidget = ({ poll, onVote }: PollWidgetProps) => {
                             className={`w-full relative overflow-hidden rounded-xl border text-left transition-all duration-300 group ${isSelected
                                 ? 'border-cyan-500/50 shadow-lg shadow-cyan-200/40'
                                 : 'border-slate-200 hover:border-slate-300'
-                                }`}
-                        >
+                                 }`} 
+                                   >
                             {/* Progress Bar Background */}
                             <div
-                                className={`absolute top-0 left-0 h-full transition-all duration-700 ease-out ${isSelected
+                                   className={`absolute top-0 left-0 h-full transition-all duration-700 ease-out ${isSelected
                                     ? 'bg-gradient-to-r from-cyan-200/60 to-blue-200/60'
                                     : 'bg-slate-200/60'
                                     }`}
